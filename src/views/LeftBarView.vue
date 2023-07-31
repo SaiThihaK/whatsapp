@@ -33,15 +33,23 @@ import MagnifyIcon from "vue-material-design-icons/Magnify.vue";
 import MessageRow from "../components/MessageRow.vue"
 import {useUserStore} from "@/store/userStore";
 import router from "@/router";
+import {onMounted} from "vue";
 
 const userStore = useUserStore();
 const logoutHandler = ()=>{
   let res = confirm("are you sure want to logout");
   if(res){
     userStore.logout();
-    localStorage.removeItem("user");
     router.push("/login");
   }
 
 };
+
+onMounted(()=>{
+  try{
+    userStore.getAllUser();
+  }catch (err){
+    console.log(err);
+  }
+})
 </script>

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from 'axios'
-import { doc,setDoc,getDoc  } from "firebase/firestore";
+import { doc,setDoc,getDoc,collection  } from "firebase/firestore";
 import {db} from "@/firebase-init";
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -9,6 +9,7 @@ export const useUserStore = defineStore('user', {
     picture: '',
     firstName: '',
     lastName: '',
+      allUsers:[],
 
   }),
   actions:{
@@ -56,6 +57,18 @@ export const useUserStore = defineStore('user', {
     console.log(err);
     }
   },
+      async getAllUser(){
+        const querySnapShot =await  getDoc(collection(db,"users"));
+        console.log(querySnapShot);
+        let users = [];
+        // querySnapShot.forEach(res=>users.push({res.data()}))
+        // if(users.length){
+        //     this.allUsers = [];
+        //     users.forEach(res=>this.allUsers.push({res}));
+        // }
+
+
+      },
   logout(){
     this.sub = '';
     this.email = '';
